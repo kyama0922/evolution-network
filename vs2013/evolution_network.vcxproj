@@ -19,12 +19,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\core\vs2013\evolution_core.vcxproj">
+    <ProjectReference Include="..\..\evolution-core\vs2013\evolution_core.vcxproj">
       <Project>{9e6fb115-8d55-4a88-8a54-63d40aac73f1}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\utility\vs2013\evolution_utility.vcxproj">
+    <ProjectReference Include="..\..\evolution-utility\vs2013\evolution_utility.vcxproj">
       <Project>{d8293f0e-1868-4cf6-b099-6eff4dbc2ef9}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\evolution_network.h" />
+    <ClInclude Include="..\evolution_network_interface.h" />
+    <ClInclude Include="..\evolution_network_num.h" />
+    <ClInclude Include="..\evolution_network_result.h" />
+    <ClInclude Include="..\src\evolution_network_implement.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\factory\evolution_network_factory.cpp" />
+    <ClCompile Include="..\function\evolution_network_function.cpp" />
+    <ClCompile Include="..\protocol\evolution_network_protocol.cpp" />
+    <ClCompile Include="..\socket\evolution_network_listenersocket.cpp" />
+    <ClCompile Include="..\socket\evolution_network_socket.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{ACAB0A83-C65D-417F-AE7C-E8A7F396713F}</ProjectGuid>
