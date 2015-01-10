@@ -40,7 +40,7 @@ u32 Socket::Release(){
     return counter;
 }
 
-Socket::Socket(){
+Socket::Socket() :m_socket(-1){
 
 }
 
@@ -49,6 +49,8 @@ Socket::~Socket(){
 }
 
 NetworkResult::_RESULT Socket::Create(IProtocol* protocol){
+    SOCKET_DESC desc;
+    protocol->GetDesc(&desc);
 
 }
 

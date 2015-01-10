@@ -39,6 +39,7 @@ namespace EVOLUTION{
         private:
             EVOLUTION::InstanceCounter m_instance_counter;
             IProtocol* mp_protocol;
+            SOCKET m_socket;
         public:
             //IUnknown
             u32 AddRef();
@@ -68,8 +69,7 @@ namespace EVOLUTION{
         class ListenerSocket : public IListenerSocket{
         private:
             EVOLUTION::InstanceCounter m_instance_counter;
-            INetworkFactory* mp_factory;
-
+            IProtocol* mp_protocol;
         public:
             //IUnknown
             u32 AddRef();
