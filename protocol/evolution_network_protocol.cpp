@@ -5,11 +5,11 @@ using namespace EVOLUTION::NETWORK;
 
 
 //IUnknown
-u32 Protocol::AddRef(){
+u32 ProtocolINetv4::AddRef(){
     return m_instance_counter.AddRef();
 }
 
-RESULT Protocol::QueryInterface(EVOLUTION::EVOLUTION_IID riid, void **ppvObject){
+RESULT ProtocolINetv4::QueryInterface(EVOLUTION::EVOLUTION_IID riid, void **ppvObject){
     if (IsEqualGUID(riid, EVOLUTION_GUID::IID_IUnknown))
     {
         *ppvObject = static_cast<IUnknown *>(this);
@@ -20,9 +20,9 @@ RESULT Protocol::QueryInterface(EVOLUTION::EVOLUTION_IID riid, void **ppvObject)
         *ppvObject = static_cast<IProtocol *>(this);
         this->AddRef();
     }
-    else if (IsEqualGUID(riid, EVOLUTION_GUID::IID_Protocol))
+    else if (IsEqualGUID(riid, EVOLUTION_GUID::IID_ProtocolINetv4))
     {
-        *ppvObject = static_cast<Protocol *>(this);
+        *ppvObject = static_cast<ProtocolINetv4 *>(this);
         this->AddRef();
     }
     else
@@ -33,7 +33,7 @@ RESULT Protocol::QueryInterface(EVOLUTION::EVOLUTION_IID riid, void **ppvObject)
     return RESULT::S_ok;
 }
 
-u32 Protocol::Release(){
+u32 ProtocolINetv4::Release(){
     u32 counter = this->m_instance_counter.Release();
     if (counter == 0){
         delete this;
@@ -41,56 +41,40 @@ u32 Protocol::Release(){
     return counter;
 }
 
-Protocol::Protocol(){
+ProtocolINetv4::ProtocolINetv4(){
 
 }
 
-Protocol::~Protocol(){
+ProtocolINetv4::~ProtocolINetv4(){
 
 }
 
-NetworkResult::_RESULT Protocol::Create(const c8* host_name, u16 port, ADDRESSFAMILY::_ADDRESSFAMILY addr_family){
-    if (EVOLUTION::FUNCTION::GetAddress(this->m_desc.ip, host_name))
+NetworkResult::_RESULT ProtocolINetv4::Create(const c8* host_name, u16 port){
+    if (EVOLUTION::FUNCTION::GetAddress(this->m_ip, host_name))
     {
         return NetworkResult::GET_IPADDR_FAILED;
     }
-    this->m_desc.port = port;
-    this->m_desc.addr_family = addr_family;
+    this->m_port = port;
     return NetworkResult::RESULT_OK;
 }
 
-NetworkResult::_RESULT Protocol::Create(IPADDR ip, u16 port, ADDRESSFAMILY::_ADDRESSFAMILY addr_family){
-    this->m_desc.ip = ip;
-    this->m_desc.port = port;
-    this->m_desc.addr_family = addr_family;
+NetworkResult::_RESULT ProtocolINetv4::Create(IPADDR_V4 ip, u16 port){
+    this->m_ip = ip;
+    this->m_port = port;
     return NetworkResult::RESULT_OK;
-}
-
-NetworkResult::_RESULT Protocol::Create(const SOCKET_DESC& desc){
-    this->m_desc.ip = desc.ip;
-    this->m_desc.port = desc.port;
-    this->m_desc.addr_family = desc.addr_family;
-    return NetworkResult::RESULT_OK;
-}
-
-//プロトコルを取得します。
-void Protocol::GetDesc(SOCKET_DESC* desc)const{
-    desc->ip = this->m_desc.ip;
-    desc->port = this->m_desc.port;
-    desc->addr_family = this->m_desc.addr_family;
 }
 
 //IPアドレスを取得します。
-const IPADDR& Protocol::GetipAddr()const{
-    return this->m_desc.ip;
+const IPADDR_V4& ProtocolINetv4::GetipAddr()const{
+    return this->m_ip;
 }
 
 //ポート番号を取得します。
-u16 Protocol::GetPort()const{
-    return this->m_desc.port;
+u16 ProtocolINetv4::GetPort()const{
+    return this->m_port;
 }
 
 //アドレスファミリーを取得します。
-ADDRESSFAMILY::_ADDRESSFAMILY Protocol::GetAddrFamily()const{
-    return this->m_desc.addr_family;
+ADDRESSFAMILY::_ADDRESSFAMILY ProtocolINetv4::GetAddrFamily()const{
+    return ADDRESSFAMILY::_INET;
 }
