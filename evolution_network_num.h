@@ -77,25 +77,24 @@ namespace EVOLUTION{
          RECEIVE = 0x00, //SHUT_RD
          SEND = 0x01,    //SHUT_WR
          BOTH = 0x02,    //SHUT_RDWR
-         NONE = 0xFF,    //SHUT_RDWR
          */
         struct SHUTDOWN{
             enum _SHUTDOWN{
                 RECEIVE = 0x00, //SHUT_RD
                 SEND = 0x01,    //SHUT_WR
                 BOTH = 0x02,    //SHUT_RDWR
-                NONE = 0xFF,    //SHUT_RDWR
             };
         };
 
         struct BLOCKINGMODE{
-            enum _BLOCKINGMODE{
-                BLOCK = 0x00, //BLOCK
-                NOBLOCK = 0x01,    //NOBLOCK
+            enum
+            {
+                BLOCK = 0x01, //BLOCK
             };
         };
 
-        struct IPADDR{
+        //アドレスV4
+        struct IPADDR_V4{
             union{
                 u8 u_addr_b[4];
                 u16 u_addr_s[2];
@@ -103,10 +102,21 @@ namespace EVOLUTION{
             }Addr;
         };
 
-        struct SOCKET_DESC{
-            IPADDR ip;
-            u16    port;
-            ADDRESSFAMILY::_ADDRESSFAMILY addr_family;
+        //アドレスV6
+        struct IPADDR_V6{
+            union{
+                u8 u_addr_b[16];
+                u16 u_addr_s[8];
+                u32 u_addr_l[4];
+                u64 u_addr_ll[2];
+            }Addr;
+        };
+
+        struct SOCKET_TYPE{
+            enum _TYPE{
+                STREAM = 0x01,//TCP
+                DGRAM = 0x02,//UDP
+            };
         };
 
 #define EVOLUTION_IP_SET(ip1,ip2,ip3,ip4) ((ip4 << 24) | (ip3 << 16) | (ip2 << 8) | (ip1))
