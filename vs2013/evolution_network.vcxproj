@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\evolution_network.h" />
+    <ClInclude Include="..\evolution_network_implement.h" />
     <ClInclude Include="..\evolution_network_interface.h" />
     <ClInclude Include="..\evolution_network_num.h" />
     <ClInclude Include="..\evolution_network_result.h" />
@@ -37,8 +38,11 @@
     <ClCompile Include="..\factory\evolution_network_factory.cpp" />
     <ClCompile Include="..\function\evolution_network_function.cpp" />
     <ClCompile Include="..\protocol\evolution_network_protocol.cpp" />
-    <ClCompile Include="..\socket\evolution_network_listenersocket.cpp" />
     <ClCompile Include="..\socket\evolution_network_socket.cpp" />
+    <ClCompile Include="..\socket\evolution_network_tcp_bindsocket.cpp" />
+    <ClCompile Include="..\socket\evolution_network_tpc_connectsocket.cpp" />
+    <ClCompile Include="..\socket\evolution_network_udp_bindsocket.cpp" />
+    <ClCompile Include="..\socket\evolution_network_udp_transceiversocket.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{ACAB0A83-C65D-417F-AE7C-E8A7F396713F}</ProjectGuid>

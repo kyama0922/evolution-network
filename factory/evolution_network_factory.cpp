@@ -56,75 +56,193 @@ NetworkResult::_RESULT NetworkFactory::Create(){
 //プロトコルを作成します。
 NetworkResult::_RESULT NetworkFactory::CreateProtocol(IProtocol** pp_protocol, const c8* host_name, u16 port, ADDRESSFAMILY::_ADDRESSFAMILY addr_family){
     *pp_protocol = nullptr;
-    Protocol* protocol = NEW Protocol;
-    if (protocol == nullptr)
+    //IpV4プロトコルの作成
+    if (addr_family == EVOLUTION::NETWORK::ADDRESSFAMILY::_INET)
+    {
+        ProtocolINetv4* protocolv4 = NEW ProtocolINetv4;
+        if (protocolv4 == nullptr)
+        {
+            return NetworkResult::CREATE_FAILED;
+        }
+        NetworkResult::_RESULT ret = protocolv4->Create(host_name, port);
+        if (EVOLUTION_FAILED(ret))
+        {
+            EVOLUTION_RELEASE(protocolv4);
+            return ret;
+        }
+        *pp_protocol = protocolv4;
+        return NetworkResult::RESULT_OK;
+    }
+    //IpV6プロトコルの作成
+    else if (addr_family == EVOLUTION::NETWORK::ADDRESSFAMILY::_INET)
     {
         return NetworkResult::CREATE_FAILED;
     }
-    NetworkResult::_RESULT ret = protocol->Create(host_name, port, addr_family);
+
+    return NetworkResult::CREATE_FAILED;
+}
+//プロトコルを作成します。
+NetworkResult::_RESULT NetworkFactory::CreateProtocol(IProtocol** pp_protocol, IPADDR_V4 ip4, u16 port){
+    *pp_protocol = nullptr;
+    ProtocolINetv4* protocolv4 = NEW ProtocolINetv4;
+    if (protocolv4 == nullptr)
+    {
+        return NetworkResult::CREATE_FAILED;
+    }
+    NetworkResult::_RESULT ret = protocolv4->Create(ip4, port);
     if (EVOLUTION_FAILED(ret))
     {
-        EVOLUTION_RELEASE(protocol);
+        EVOLUTION_RELEASE(protocolv4);
         return ret;
     }
-    *pp_protocol = protocol;
+    *pp_protocol = protocolv4;
     return NetworkResult::RESULT_OK;
 }
 
 //プロトコルを作成します。
-NetworkResult::_RESULT NetworkFactory::CreateProtocol(IProtocol** pp_protocol, IPADDR ip, u16 port, ADDRESSFAMILY::_ADDRESSFAMILY addr_family){
-    *pp_protocol = nullptr;
-    Protocol* protocol = NEW Protocol;
-    if (protocol == nullptr)
-    {
-        return NetworkResult::CREATE_FAILED;
-    }
-    NetworkResult::_RESULT ret = protocol->Create(ip, port, addr_family);
-    if (EVOLUTION_FAILED(ret))
-    {
-        return ret;
-    }
-    *pp_protocol = protocol;
-    return NetworkResult::RESULT_OK;
-}
-
-//プロトコルを作成します。
-NetworkResult::_RESULT NetworkFactory::CreateProtocol(IProtocol** pp_protocol, const SOCKET_DESC& desc){
-    *pp_protocol = nullptr;
-    Protocol* protocol = NEW Protocol();
-    if (protocol == nullptr)
-    {
-        return NetworkResult::CREATE_FAILED;
-    }
-    NetworkResult::_RESULT ret = protocol->Create(desc);
-    if (EVOLUTION_FAILED(ret))
-    {
-        EVOLUTION_RELEASE(protocol);
-        return ret;
-    }
-    *pp_protocol = protocol;
-    return NetworkResult::RESULT_OK;
-}
-
-//ソケットを作成します。
-NetworkResult::_RESULT NetworkFactory::CreateSocket(ISocket** pp_socket, IProtocol* protocol){
-    *pp_socket = nullptr;
-    Socket* socket = NEW Socket();
-    if (protocol == nullptr)
-    {
-        return NetworkResult::CREATE_FAILED;
-    }
-    NetworkResult::_RESULT ret = protocol->Create(desc);
-    if (EVOLUTION_FAILED(ret))
-    {
-        EVOLUTION_RELEASE(protocol);
-        return ret;
-    }
-    *pp_socket = protocol;
-    return NetworkResult::RESULT_OK;
+NetworkResult::_RESULT NetworkFactory::CreateProtocol(IProtocol** pp_protocol, IPADDR_V6 ip6, u16 port){
     return NetworkResult::CREATE_FAILED;
 }
 
-NetworkResult::_RESULT NetworkFactory::CreateListenerSocket(IListenerSocket** pp_listener_socket, IProtocol* protocol){
+//コネクトソケットを作成します。
+NetworkResult::_RESULT NetworkFactory::CreateTCPConnectSocket(ITCPConnectSocket** pp_connect_socket, IProtocol* protocol){
+    *pp_connect_socket = nullptr;
+    NetworkResult::_RESULT ret = NetworkResult::RESULT_OK;
+    TCPConnectSocket* connect_socket = NEW TCPConnectSocket();
+    if (connect_socket == nullptr)
+    {
+        return NetworkResult::CREATE_FAILED;
+    }
+
+    ret = connect_socket->Create(protocol);
+    if (EVOLUTION_FAILED(ret))
+    {
+        EVOLUTION_RELEASE(connect_socket);
+        return NetworkResult::CREATE_FAILED;
+    }
+    *pp_connect_socket = connect_socket;
+    return NetworkResult::RESULT_OK;
+}
+//TCPバインドソケットを作成します。
+NetworkResult::_RESULT NetworkFactory::CreateTCPBindSocket(ITCPBindSocket** pp_bind_socket, u16 port, ADDRESSFAMILY::_ADDRESSFAMILY addr_family){
+    *pp_bind_socket = nullptr;
+    TCPBindSocket* tcp_bindsocket = NEW TCPBindSocket();
+    NetworkResult::_RESULT ret = NetworkResult::RESULT_OK;
+    if (tcp_bindsocket == nullptr)
+    {
+        return NetworkResult::CREATE_FAILED;
+    }
+
+    IProtocol* protocol = nullptr;
+    if (addr_family == EVOLUTION::NETWORK::ADDRESSFAMILY::_INET)
+    {
+        IPADDR_V4 ip_addr;
+        ip_addr.Addr.u_addr = 0x00000000;
+        ret = this->CreateProtocol(&protocol, ip_addr, port);
+        if (EVOLUTION_FAILED(ret))
+        {
+            EVOLUTION_RELEASE(protocol);
+            EVOLUTION_RELEASE(tcp_bindsocket);
+            return ret;
+        }
+    }
+    else if (addr_family == EVOLUTION::NETWORK::ADDRESSFAMILY::_INET6)
+    {
+        IPADDR_V6 ip_addr;
+        ip_addr.Addr.u_addr_ll[0] = 0x0000000000000000;
+        ip_addr.Addr.u_addr_ll[1] = 0x0000000000000000;
+        ret = this->CreateProtocol(&protocol, ip_addr, port);
+        if (EVOLUTION_FAILED(ret))
+        {
+            EVOLUTION_RELEASE(protocol);
+            EVOLUTION_RELEASE(tcp_bindsocket);
+            return ret;
+        }
+    }
+    else
+    {
+        EVOLUTION_RELEASE(tcp_bindsocket);
+        return NetworkResult::CREATE_FAILED;
+    }
+    ret = tcp_bindsocket->Create(protocol);
+    EVOLUTION_RELEASE(protocol);
+    if (EVOLUTION_FAILED(ret))
+    {
+        EVOLUTION_RELEASE(tcp_bindsocket);
+        return ret;
+    }
+    *pp_bind_socket = tcp_bindsocket;
+    return NetworkResult::RESULT_OK;
+}
+//TCPバインドソケットを作成します。
+NetworkResult::_RESULT NetworkFactory::CreateTCPBindSocket(ITCPBindSocket** pp_bind_socket, IProtocol* protocol){
+    *pp_bind_socket = nullptr;
+    TCPBindSocket* tcp_bindsocket = NEW TCPBindSocket();
+    
+    if (tcp_bindsocket == nullptr)
+    {
+        return NetworkResult::CREATE_FAILED;
+    }
+    NetworkResult::_RESULT ret = tcp_bindsocket->Create(protocol);
+    if (EVOLUTION_FAILED(ret))
+    {
+        EVOLUTION_RELEASE(tcp_bindsocket);
+        return ret;
+    }
+    *pp_bind_socket = tcp_bindsocket;
     return NetworkResult::CREATE_FAILED;
+}
+//コネクトソケットを作成します。
+NetworkResult::_RESULT NetworkFactory::CreateUDPTransceiverSocket(IUDPTransceiverSocket** pp_udp_transceiver_socket, IProtocol* protocol){
+    *pp_udp_transceiver_socket = nullptr;
+    UDPTransceiverSocket* udp_transceiversocket = NEW UDPTransceiverSocket();
+
+    if (udp_transceiversocket == nullptr)
+    {
+        return NetworkResult::CREATE_FAILED;
+    }
+    NetworkResult::_RESULT ret = udp_transceiversocket->Create(protocol);
+    if (EVOLUTION_FAILED(ret))
+    {
+        EVOLUTION_RELEASE(udp_transceiversocket);
+        return ret;
+    }
+    *pp_udp_transceiver_socket = udp_transceiversocket;
+    return NetworkResult::RESULT_OK;
+}
+//UDPバインドソケットを作成します。
+NetworkResult::_RESULT NetworkFactory::CreateUDPBindSocket(IUDPBindSocket** pp_udp_bind_socket, u16 port, ADDRESSFAMILY::_ADDRESSFAMILY addr_family){
+    *pp_udp_bind_socket = nullptr;
+    UDPBindSocket* udp_bindsocket = NEW UDPBindSocket();
+
+    if (udp_bindsocket == nullptr)
+    {
+        return NetworkResult::CREATE_FAILED;
+    }
+    NetworkResult::_RESULT ret = udp_bindsocket->Create(this, port, addr_family);
+    if (EVOLUTION_FAILED(ret))
+    {
+        EVOLUTION_RELEASE(udp_bindsocket);
+        return ret;
+    }
+    *pp_udp_bind_socket = udp_bindsocket;
+    return NetworkResult::RESULT_OK;
+}
+//UDPバインドソケットを作成します。
+NetworkResult::_RESULT NetworkFactory::CreateUDPBindSocket(IUDPBindSocket** pp_udp_bind_socket, IProtocol* protocol){
+    *pp_udp_bind_socket = nullptr;
+    UDPBindSocket* udp_bindsocket = NEW UDPBindSocket();
+
+    if (udp_bindsocket == nullptr)
+    {
+        return NetworkResult::CREATE_FAILED;
+    }
+    NetworkResult::_RESULT ret = udp_bindsocket->Create(this, protocol);
+    if (EVOLUTION_FAILED(ret))
+    {
+        EVOLUTION_RELEASE(udp_bindsocket);
+        return ret;
+    }
+    *pp_udp_bind_socket = udp_bindsocket;
+    return NetworkResult::RESULT_OK;
 }
