@@ -33,6 +33,9 @@
     <ClInclude Include="..\evolution_network.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="..\evolution_network_implement.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\function\evolution_network_function.cpp">
@@ -41,13 +44,22 @@
     <ClCompile Include="..\protocol\evolution_network_protocol.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\socket\evolution_network_listenersocket.cpp">
+    <ClCompile Include="..\factory\evolution_network_factory.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\socket\evolution_network_udp_bindsocket.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\socket\evolution_network_tpc_connectsocket.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="..\socket\evolution_network_tcp_bindsocket.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="..\socket\evolution_network_socket.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\factory\evolution_network_factory.cpp">
+    <ClCompile Include="..\socket\evolution_network_udp_transceiversocket.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>

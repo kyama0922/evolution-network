@@ -1,5 +1,5 @@
 ﻿#include "../evolution_network_implement.h"
-
+#include <WinSock2.h>
 #pragma comment(lib ,"Ws2_32.lib" )
 
 using namespace EVOLUTION;
@@ -17,7 +17,7 @@ EVOLUTION::RESULT EVOLUTION::FUNCTION::CreateNetworkFactory(NETWORK::INetworkFac
         }
 
         ~WIN_FACTORY(){
-            //p_factory->Release();
+            p_factory->Release();
             // winsock2の終了処理
             WSACleanup();
         }
@@ -44,7 +44,7 @@ EVOLUTION::RESULT EVOLUTION::FUNCTION::CreateNetworkFactory(NETWORK::INetworkFac
 }
 
 
-EVOLUTION::RESULT EVOLUTION::FUNCTION::GetAddress(NETWORK::IPADDR& out, const c8* hostname){
+EVOLUTION::RESULT EVOLUTION::FUNCTION::GetAddress(NETWORK::IPADDR_V4& out, const c8* hostname){
     out.Addr.u_addr = inet_addr((const char*)hostname);
     if (out.Addr.u_addr == 0xFFFFFFFF){
         struct hostent *host;
