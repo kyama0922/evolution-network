@@ -122,7 +122,7 @@ namespace EVOLUTION{
             //コネクトソケットを作成します。
             virtual NetworkResult::_RESULT CreateUDPTransceiverSocket(IUDPTransceiverSocket** pp_udp_transceiver_socket, IProtocol* protocol) = 0;
             //UDPバインドソケットを作成します。
-            virtual NetworkResult::_RESULT CreateUDPBindSocket(IUDPBindSocket** pp_udp_bind_socket, u16 port, ADDRESSFAMILY::_ADDRESSFAMILY addr_family) = 0;
+            virtual NetworkResult::_RESULT CreateUDPBindSocket(IUDPBindSocket** pp_udp_bind_socket, u16 port, ADDRESSFAMILY::_ADDRESSFAMILY addr_family = ADDRESSFAMILY::_INET) = 0;
             //UDPバインドソケットを作成します。
             virtual NetworkResult::_RESULT CreateUDPBindSocket(IUDPBindSocket** pp_udp_bind_socket, IProtocol* protocol) = 0;
         };
