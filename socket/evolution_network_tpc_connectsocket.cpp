@@ -1,4 +1,4 @@
-﻿#include "../evolution_network_implement.h"
+#include "../evolution_network_implement.h"
 
 using namespace EVOLUTION;
 using namespace EVOLUTION::NETWORK;
@@ -32,9 +32,9 @@ RESULT TCPConnectSocket::QueryInterface(EVOLUTION::EVOLUTION_IID riid, void **pp
     else
     {
         *ppvObject = nullptr;
-        return RESULT::E_no_instance;
+        return _RESULT::E_no_instance;
     }
-    return RESULT::S_ok;
+    return _RESULT::S_ok;
 }
 
 u32 TCPConnectSocket::Release(){
@@ -72,22 +72,22 @@ EVOLUTION::NETWORK::SOCKET TCPConnectSocket::GetSocket()const{
 
 //ソケットをシャットダウンして終了させます。
 void TCPConnectSocket::CloseSocket(){
-    ::closesocket(this->m_socket);
+    ::close(this->m_socket);
+    this->m_socket = -1;
 }
 
 //ソケットを閉じます(オプション設定可)
 void TCPConnectSocket::ShutdownSocket(SHUTDOWN::_SHUTDOWN mode){
-    switch (mode)
-    {
-    case EVOLUTION::NETWORK::SHUTDOWN::RECEIVE:
-        ::shutdown(this->m_socket, SD_RECEIVE);
-        break;
-    case EVOLUTION::NETWORK::SHUTDOWN::SEND:
-        ::shutdown(this->m_socket, SD_SEND);
-        break;
-    case EVOLUTION::NETWORK::SHUTDOWN::BOTH:
-        ::shutdown(this->m_socket, SD_BOTH);
-        break;
+    switch (mode) {
+        case EVOLUTION::NETWORK::SHUTDOWN::RECEIVE:
+            ::shutdown(this->m_socket, SHUT_RD);
+            break;
+        case EVOLUTION::NETWORK::SHUTDOWN::SEND:
+            ::shutdown(this->m_socket, SHUT_WR);
+            break;
+        case EVOLUTION::NETWORK::SHUTDOWN::BOTH:
+            ::shutdown(this->m_socket, SHUT_RDWR);
+            break;
     }
 }
 
@@ -97,16 +97,15 @@ const IProtocol* TCPConnectSocket::GetProtocol()const{
 }
 //ブロッキング設定をします。
 void TCPConnectSocket::SetBlockMode(bool flag){
-    u_long val;
-    if (flag)
-    {
-        val = 0;
-        ioctlsocket(this->m_socket, FIONBIO, &val);
+    s32 option = ::fcntl(this->m_socket, F_GETFL, 0);
+    if (flag) {
+        EVOLUTION_ENABLE_STATE(option, O_NONBLOCK);
+        ::fcntl(this->m_socket, F_SETFL, option);
         EVOLUTION_ENABLE_STATE(this->m_flag, BLOCKINGMODE::BLOCK);
         return;
     }
-    val = 1;
-    ioctlsocket(this->m_socket, FIONBIO, &val);
+    EVOLUTION_DISABLED_STATE(option, O_NONBLOCK);
+    ::fcntl(this->m_socket, F_SETFL, option);
     EVOLUTION_DISABLED_STATE(this->m_flag, BLOCKINGMODE::BLOCK);
 }
 //ブロッキング状態を確認します。
@@ -126,7 +125,7 @@ CONNECT_ERROR::_CONNECT_ERROR TCPConnectSocket::Connect()const{
         memset(&sock_in, 0, sizeof(struct sockaddr_in));
         sock_in.sin_family = af;
         sock_in.sin_port = htons(protocolv4->GetPort());
-        sock_in.sin_addr.S_un.S_addr = protocolv4->GetipAddr().Addr.u_addr;
+        sock_in.sin_addr.s_addr = protocolv4->GetipAddr().Addr.u_addr;
         EVOLUTION_RELEASE(protocolv4);
         ret = ::connect(this->m_socket, (struct sockaddr *)&sock_in, sizeof(struct sockaddr));
     }

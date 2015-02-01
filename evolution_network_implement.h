@@ -1,8 +1,15 @@
-﻿#ifndef __EVOLUTION_NETWORK_IMPLEMENT_H_
+#ifndef __EVOLUTION_NETWORK_IMPLEMENT_H_
 #define __EVOLUTION_NETWORK_IMPLEMENT_H_
 
 #include "evolution_network_interface.h"
-#include <WinSock2.h>
+
+#include <sys/socket.h>
+#include <sys/socketvar.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/ioctl.h>
+#include <fcntl.h>
 
 namespace EVOLUTION{
     namespace NETWORK{

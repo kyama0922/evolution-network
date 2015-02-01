@@ -1,4 +1,4 @@
-﻿#include "../evolution_network_implement.h"
+#include "../evolution_network_implement.h"
 
 using namespace EVOLUTION;
 using namespace EVOLUTION::NETWORK;
@@ -28,9 +28,9 @@ RESULT ProtocolINetv4::QueryInterface(EVOLUTION::EVOLUTION_IID riid, void **ppvO
     else
     {
         *ppvObject = nullptr;
-        return RESULT::E_no_instance;
+        return _RESULT::E_no_instance;
     }
-    return RESULT::S_ok;
+    return _RESULT::S_ok;
 }
 
 u32 ProtocolINetv4::Release(){

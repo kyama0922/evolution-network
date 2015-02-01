@@ -1,4 +1,4 @@
-﻿#ifndef __EVOLUTION_NETWORK_INTERFACE_H_
+#ifndef __EVOLUTION_NETWORK_INTERFACE_H_
 #define __EVOLUTION_NETWORK_INTERFACE_H_
 
 #include <evolution.h>

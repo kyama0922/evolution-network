@@ -1,4 +1,4 @@
-﻿#ifndef __EVOLUTION_NETWORK__
+#ifndef __EVOLUTION_NETWORK__
 #define __EVOLUTION_NETWORK__
 
 //ネットワーク定数

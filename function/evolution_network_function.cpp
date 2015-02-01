@@ -1,6 +1,5 @@
-﻿#include "../evolution_network_implement.h"
-#include <WinSock2.h>
-#pragma comment(lib ,"Ws2_32.lib" )
+#include "../evolution_network_implement.h"
+
 
 using namespace EVOLUTION;
 using namespace EVOLUTION::NETWORK;
@@ -8,18 +7,15 @@ using namespace EVOLUTION::NETWORK;
 EVOLUTION::RESULT EVOLUTION::FUNCTION::CreateNetworkFactory(NETWORK::INetworkFactory** pp_network_factory){
     static struct WIN_FACTORY{
         EVOLUTION::NETWORK::NetworkFactory* p_factory;
-        WSADATA wsaData;
         s32 startup_err;
         WIN_FACTORY() : p_factory(nullptr)
         {
             // winsock2の初期化
-            startup_err = WSAStartup(MAKEWORD(2, 0), &wsaData);
         }
 
         ~WIN_FACTORY(){
             p_factory->Release();
             // winsock2の終了処理
-            WSACleanup();
         }
     }_f;
     *pp_network_factory = nullptr;
@@ -51,8 +47,7 @@ EVOLUTION::RESULT EVOLUTION::FUNCTION::GetAddress(NETWORK::IPADDR_V4& out, const
 
         host = gethostbyname((const char*)hostname);
         if (host == NULL) {
-            if (WSAGetLastError() == WSAHOST_NOT_FOUND) {
-            }
+          
             out.Addr.u_addr = 0xFFFFFFFF;
             return EVOLUTION::_RESULT::E_unknown;
         }

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="SourceFiles" displayName="ソース・ファイル" projectFiles="true">
+      <logicalFolder name="factory" displayName="factory" projectFiles="true">
+        <itemPath>../factory/evolution_network_factory.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="function" displayName="function" projectFiles="true">
+        <itemPath>../function/evolution_network_function.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="protocol" displayName="protocol" projectFiles="true">
+        <itemPath>../protocol/evolution_network_protocol.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="socket" displayName="socket" projectFiles="true">
+        <itemPath>../socket/evolution_network_socket.cpp</itemPath>
+        <itemPath>../socket/evolution_network_tcp_bindsocket.cpp</itemPath>
+        <itemPath>../socket/evolution_network_tpc_connectsocket.cpp</itemPath>
+        <itemPath>../socket/evolution_network_udp_bindsocket.cpp</itemPath>
+        <itemPath>../socket/evolution_network_udp_transceiversocket.cpp</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="HeaderFiles" displayName="ヘッダー・ファイル" projectFiles="true">
+      <itemPath>../evolution_network.h</itemPath>
+      <itemPath>../evolution_network_implement.h</itemPath>
+      <itemPath>../evolution_network_interface.h</itemPath>
+      <itemPath>../evolution_network_num.h</itemPath>
+      <itemPath>../evolution_network_result.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles" displayName="リソース・ファイル" projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="テスト・ファイル"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="重要なファイル"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>../factory</Elem>
+    <Elem>../function</Elem>
+    <Elem>../protocol</Elem>
+    <Elem>../socket</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="3">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>../..</pElem>
+          </incDir>
+          <commandLine>-ggdb -O0 -lrt</commandLine>
+          <preprocessorList>
+            <Elem>_DEBUG</Elem>
+            <Elem>_LINUX=1</Elem>
+            <Elem>_X64=1</Elem>
+            <Elem>nullptr=0</Elem>
+          </preprocessorList>
+        </ccTool>
+        <archiverTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libevolution-network.a</output>
+        </archiverTool>
+      </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/libevolution-network.tar</output>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
+      <item path="../evolution_network.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../evolution_network_implement.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../evolution_network_interface.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../evolution_network_num.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../evolution_network_result.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../factory/evolution_network_factory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../function/evolution_network_function.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../protocol/evolution_network_protocol.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../socket/evolution_network_socket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../socket/evolution_network_tcp_bindsocket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../socket/evolution_network_tpc_connectsocket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../socket/evolution_network_udp_bindsocket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../socket/evolution_network_udp_transceiversocket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="3">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>../..</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>NODEBUG=1</Elem>
+            <Elem>_LINUX=1</Elem>
+            <Elem>_X64=1</Elem>
+            <Elem>nullptr=0</Elem>
+          </preprocessorList>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <archiverTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libevolution-network.a</output>
+        </archiverTool>
+      </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/libevolution-network.tar</output>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}lib/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="644"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
+      <item path="../evolution_network.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../evolution_network_implement.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../evolution_network_interface.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../evolution_network_num.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../evolution_network_result.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../factory/evolution_network_factory.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../function/evolution_network_function.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../protocol/evolution_network_protocol.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../socket/evolution_network_socket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../socket/evolution_network_tcp_bindsocket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../socket/evolution_network_tpc_connectsocket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../socket/evolution_network_udp_bindsocket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../socket/evolution_network_udp_transceiversocket.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
