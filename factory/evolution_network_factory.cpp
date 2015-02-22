@@ -9,17 +9,17 @@ u32 NetworkFactory::AddRef(){
 }
 
 RESULT NetworkFactory::QueryInterface(EVOLUTION::EVOLUTION_IID riid, void **ppvObject){
-    if (IsEqualGUID(riid, EVOLUTION_GUID::IID_IUnknown))
+    if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_IUnknown))
     {
         *ppvObject = static_cast<IUnknown *>(this);
         this->AddRef();
     }
-    else if (IsEqualGUID(riid, EVOLUTION_GUID::IID_INetworkFactory))
+    else if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_INetworkFactory))
     {
         *ppvObject = static_cast<INetworkFactory *>(this);
         this->AddRef();
     }
-    else if (IsEqualGUID(riid, EVOLUTION_GUID::IID_NetworkFactory))
+    else if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_NetworkFactory))
     {
         *ppvObject = static_cast<NetworkFactory *>(this);
         this->AddRef();

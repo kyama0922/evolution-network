@@ -9,22 +9,22 @@ u32 UDPBindSocket::AddRef(){
 }
 
 RESULT UDPBindSocket::QueryInterface(EVOLUTION::EVOLUTION_IID riid, void **ppvObject){
-    if (IsEqualGUID(riid, EVOLUTION_GUID::IID_IUnknown))
+    if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_IUnknown))
     {
         *ppvObject = static_cast<IUnknown *>(this);
         this->AddRef();
     }
-    else if (IsEqualGUID(riid, EVOLUTION_GUID::IID_ISocket))
+    else if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_ISocket))
     {
         *ppvObject = static_cast<ISocket *>(this);
         this->AddRef();
     }
-    else if (IsEqualGUID(riid, EVOLUTION_GUID::IID_IUDPBindSocket))
+    else if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_IUDPBindSocket))
     {
         *ppvObject = static_cast<IUDPBindSocket *>(this);
         this->AddRef();
     }
-    else if (IsEqualGUID(riid, EVOLUTION_GUID::IID_UDPBindSocket))
+    else if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_UDPBindSocket))
     {
         *ppvObject = static_cast<UDPBindSocket *>(this);
         this->AddRef();

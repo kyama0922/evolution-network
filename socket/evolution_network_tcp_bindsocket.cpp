@@ -14,22 +14,22 @@ u32 TCPBindSocket::AddRef(){
 }
 
 RESULT TCPBindSocket::QueryInterface(EVOLUTION::EVOLUTION_IID riid, void **ppvObject){
-    if (IsEqualGUID(riid, EVOLUTION_GUID::IID_IUnknown))
+    if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_IUnknown))
     {
         *ppvObject = static_cast<IUnknown *>(this);
         this->AddRef();
     }
-    else if (IsEqualGUID(riid, EVOLUTION_GUID::IID_ISocket))
+    else if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_ISocket))
     {
         *ppvObject = static_cast<ISocket *>(this);
         this->AddRef();
     }
-    else if (IsEqualGUID(riid, EVOLUTION_GUID::IID_ITCPBindSocket))
+    else if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_ITCPBindSocket))
     {
         *ppvObject = static_cast<ITCPBindSocket *>(this);
         this->AddRef();
     }
-    else if (IsEqualGUID(riid, EVOLUTION_GUID::IID_TCPBindSocket))
+    else if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_TCPBindSocket))
     {
         *ppvObject = static_cast<TCPBindSocket *>(this);
         this->AddRef();

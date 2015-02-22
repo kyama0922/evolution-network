@@ -9,22 +9,22 @@ u32 TCPConnectSocket::AddRef(){
 }
 
 RESULT TCPConnectSocket::QueryInterface(EVOLUTION::EVOLUTION_IID riid, void **ppvObject){
-    if (IsEqualGUID(riid, EVOLUTION_GUID::IID_IUnknown))
+    if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_IUnknown))
     {
         *ppvObject = static_cast<IUnknown *>(this);
         this->AddRef();
     }
-    else if (IsEqualGUID(riid, EVOLUTION_GUID::IID_ISocket))
+    else if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_ISocket))
     {
         *ppvObject = static_cast<ISocket *>(this);
         this->AddRef();
     }
-    else if (IsEqualGUID(riid, EVOLUTION_GUID::IID_ITCPConnectSocket))
+    else if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_ITCPConnectSocket))
     {
         *ppvObject = static_cast<ITCPConnectSocket *>(this);
         this->AddRef();
     }
-    else if (IsEqualGUID(riid, EVOLUTION_GUID::IID_TCPConnectSocket))
+    else if (EVOLUTION_EQUALGUID(riid, EVOLUTION_GUID::IID_TCPConnectSocket))
     {
         *ppvObject = static_cast<TCPConnectSocket *>(this);
         this->AddRef();

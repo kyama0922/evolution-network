@@ -119,6 +119,12 @@ namespace EVOLUTION{
             };
         };
 
+        //RPCで仕様するサイズ
+        struct RPC_LAYOUT{
+            u32 size;
+            u32 array_size;
+        };
+
 #define EVOLUTION_IP_SET(ip1,ip2,ip3,ip4) ((ip4 << 24) | (ip3 << 16) | (ip2 << 8) | (ip1))
 
         EVOLUTION_INLINE u32 IP_Convert(u8 ip1, u8 ip2, u8 ip3, u8 ip4){

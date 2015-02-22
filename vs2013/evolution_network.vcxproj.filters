@@ -36,6 +36,12 @@
     <ClInclude Include="..\evolution_network_implement.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="..\evolution_network_rpc_interface.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\evolution_network_virtual_network_interface.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\function\evolution_network_function.cpp">
