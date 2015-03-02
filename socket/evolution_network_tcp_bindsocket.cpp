@@ -170,7 +170,7 @@ NetworkResult::_RESULT TCPBindSocket::Accept(ISocket** socket)const {
         EVOLUTION_RELEASE(protocol);
         return NetworkResult::RESULT_OK;
     }
-    return NetworkResult::RESULT_OK;
+    return NetworkResult::NONE_ACCEPT_SOCKET;
 }
 
 //送信
