@@ -119,11 +119,23 @@ namespace EVOLUTION{
             };
         };
 
-        //RPCで仕様するサイズ
-        struct RPC_LAYOUT{
-            u32 size;
-            u32 array_size;
+        //RPCのヘッダー
+        struct RPC_HEADER{
+            u64 rpc_id;             // RPCID
+            u32 data_size;          //データサイズ
+            u32 flag;               //フラグ()
+            u8  _expansion_data[8];//拡張データ
         };
+
+        //RPCのフラグ
+        struct RPC_FLAG{
+            enum _FLAG{
+                NONE = 0x00000000, //
+            };
+        };
+
+        //RPCのシグネチャ
+        static const u32 RPC_SIGNATURE = 0x38277068;// EVOLUTION::NETWORK::RPC_SIGNATURE = 0x0x38277068
 
 #define EVOLUTION_IP_SET(ip1,ip2,ip3,ip4) ((ip4 << 24) | (ip3 << 16) | (ip2 << 8) | (ip1))
 
